@@ -1,0 +1,57 @@
+ <!DOCTYPE HTML>
+<html>
+<head>
+    <title>Added Successfully</title>
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript">
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <!---calender-style---->
+    <link rel="stylesheet" href="/static/css/jquery-ui.css"/>
+    <!---//calender-style---->
+    <script>
+        $(function () {
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<!-- start menu -->
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <div class="col-md-6">
+                    <h1>Added Successfully!</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-bottom: 40px;"></div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+<!-- Add your script tags and other body elements here -->
+</body>
+</html>

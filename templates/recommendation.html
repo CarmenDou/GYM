@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommendation</title>
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.esm.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.bundle.js"></script>
+
+    <script src="/static/js/jquery.min.js"></script>
+
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+    </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <script>
+        $(function () {
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <form id="frm" name="frm" method="post" action="">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">CourseName</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in data_list %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td>{{item.CourseName}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>

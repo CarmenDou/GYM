@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Add Employee</title>
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <!---calender-style---->
+    <link rel="stylesheet" href="/static/css/jquery-ui.css"/>
+    <!---//calender-style---->
+    <script>
+        $(function () {
+            $("#StartDate, #EndDate").datepicker();
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+
+            $("[name='btnAdd']").click(function () {
+                $("#frmAdd").submit();
+            })
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<!-- start menu -->
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <form id="frmAdd" name="frmAdd" method="POST" class="row g-3" action="/add_employee">
+                    <div class="col-md-6">
+                        <label for="EmployeeName" class="form-label">EmployeeName</label>
+                        <input type="text" class="form-control" id="EmployeeName" name="EmployeeName" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="EmployeeType" class="form-label">EmployeeType</label>
+                        <select id="EmployeeType" name="EmployeeType" class="form-select">
+                            {% for item in data_list_employeetypes %}
+                            <option value={{item.EmployeeTypeID}}>{{item.EmployeeTypeName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="JobTitle" class="form-label">JobTitle</label>
+                        <input type="text" class="form-control" id="JobTitle" name="JobTitle" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Store" class="form-label">Store</label>
+                        <select id="Store" name="Store" class="form-select">
+                            <option>--Choose--</option>
+                            {% for item in data_list_stores %}
+                            <option value={{item.StoreID}}>{{item.StoreName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="Email" name="Email" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Password" class="form-label">Password</label>
+                        <input type="text" class="form-control" id="Password" name="Password" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <button name="btnAdd" type="button" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!-- start menu -->
+<div class="menu">
+    <div class="container">
+        <div class="logo">
+            <a href="/index"><img src="/static/images/logo.png" alt=""/></a>
+        </div>
+        <div class="h_menu4"><!-- start h_menu4 -->
+            <a class="toggleMenu" href="#">Menu</a>
+            <ul class="nav">
+                <li><a href="/index">Home</a></li>
+                <li><a href="/search_employee">Trainers</a></li>
+                <li><a href="/search_class">Courses</a></li>
+                {% if session.get('EmployeeTypeID') == 3 %}
+                <li><a href="/dashboard/productcategories_sales">Dashboards</a></li>
+                {% endif %}
+                {% if session.get('EmployeeTypeID') == 3 or session.get('CustomerID') != None %}
+                <li><a href="/my/order">My</a></li>
+                {% endif %}
+                <li><a href="/login">Log</a>
+                    <ul>
+                        <li>customer</li>
+                    </ul>
+                </li>
+                {% if session.get('EmployeeTypeID') == 3 %}
+                <li><a href="/add_region">Manage</a></li>
+                {% endif %}
+            </ul>
+            <script type="text/javascript" src="/static/js/nav.js"></script>
+        </div><!-- end h_menu4 -->
+        <div class="clear"></div>
+    </div>
+</div>

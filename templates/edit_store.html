@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EditStore</title>
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.esm.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.bundle.js"></script>
+
+    <script src="/static/js/jquery.min.js"></script>
+
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+    </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <!---calender-style---->
+    <link rel="stylesheet" href="/static/css/jquery-ui.css"/>
+    <!---//calender-style---->
+    <script>
+        $(function () {
+            $("#StartDate, #EndDate").datepicker();
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+
+            $("[name='btnEdit']").click(function () {
+                $("#frm").attr("action", "/edit_store");
+                $("#frm").submit();
+            })
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <form id="frm" name="frm" class="row g-3" method="post" action="">
+                    <input type="hidden" id="StoreID" name="StoreID" value="{{data_list[0].StoreID}}">
+                    <div class="col-md-6">
+                        <label for="StoreName" class="form-label">StoreName</label>
+                        <input type="text" class="form-control" id="StoreName" name="StoreName" value="{{data_list[0].StoreName}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="Address" name="Address" value="{{data_list[0].Address}}">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="ManagerID" class="form-label">Manager</label>
+                        <select id="ManagerID" name="ManagerID" class="form-select">
+                            <option>--Choose--</option>
+                            {% for item in data_list_managers %}
+                                <option value={{ item.EmployeeID }} {% if item.EmployeeID == data_list[0].ManagerID %}selected{% endif %}>{{ item.EmployeeName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="RegionID" class="form-label">Region</label>
+                        <select id="RegionID" name="RegionID" class="form-select">
+                            <option>--Choose--</option>
+                            {% for item in data_list_regions %}
+                                <option value={{ item.RegionID }} {% if item.RegionID == data_list[0].RegionID %}selected{% endif %}>{{ item.RegionName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <button name="btnEdit" type="button" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>

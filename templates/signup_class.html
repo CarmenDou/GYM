@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SignupClass</title>
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.esm.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.bundle.js"></script>
+
+    <script src="/static/js/jquery.min.js"></script>
+
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+    </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <!---calender-style---->
+    <link rel="stylesheet" href="/static/css/jquery-ui.css"/>
+    <!---//calender-style---->
+    <script>
+        $(function () {
+            $("#StartDate, #EndDate").datepicker();
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+
+            $("[name='btnConfirm']").click(function () {
+                var bCanSignup = true;
+                if(isNaN(Number($('#Quantity').val(),10))) {
+                    bCanSignup = false;
+                    alert('Invalid quantity format. Please enter a valid numeric format.')
+                }
+                if($('#Quantity').val() > $('#AvailableSlots').val()) {
+                    bCanSignup = false;
+                    alert('We do not have enough slots, please check your quantity!')
+                }
+                if($('#Paymentmethods').val() == "1" && ($('#CardNumber').val() == "" || $('#CVV').val() == "")) {
+                    bCanSignup = false;
+                    alert('Please fill in your CardNumber and CVV!')
+                }
+                if(bCanSignup) {
+                    $("#TotalPrice").attr("disabled", false);
+                    $("#frm").attr("action", "/signup_class");
+                    $("#frm").submit();
+                }
+            })
+
+            $('#Quantity').change(function () {
+                var iQuantity = $('#Quantity').val();
+                var mPrice = $('#Price').val();
+                var mTotalPrice = iQuantity * mPrice;
+                $('#TotalPrice').val(mTotalPrice);
+            })
+
+            $("[name='Paymentmethods']").change(function (e) {
+                changePayment()
+            })
+
+            function changePayment() {
+                if ($("#Paymentmethods").val() == 1) {
+                    document.getElementById('divCardNumber').hidden = false;
+                    document.getElementById('divCVV').hidden = false;
+                } else {
+                    document.getElementById('divCardNumber').hidden = true;
+                    document.getElementById('divCVV').hidden = true;
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <form id="frm" name="frm" class="row g-3" method="post" action="">
+                    <input type="hidden" id="CourseID" name="CourseID" value="{{data_list[0].CourseID}}">
+                    <div class="col-md-6">
+                        <label for="CourseName" class="form-label">CourseName</label>
+                        <input type="text" class="form-control" id="CourseName" name="CourseName" value="{{data_list[0].CourseName}}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="CourseDescription" class="form-label">CourseDescription</label>
+                        <input type="text" class="form-control" id="CourseDescription" name="CourseDescription" value="{{data_list[0].CourseDescription}}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="StartDate" class="form-label">StartDate</label>
+                        <input class="form-control date" id="StartDate" name="StartDate" type="text" value="{{data_list[0].StartDate|datetimeformat}}"
+                               onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="EndDate" class="form-label">EndDate</label>
+                        <input class="form-control date" id="EndDate" name="EndDate" type="text" value="{{data_list[0].EndDate|datetimeformat}}"
+                               onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Trainer" class="form-label">Trainer</label>
+                        <select id="Trainer" name="Trainer" class="form-select" disabled>
+                            <option>--Choose--</option>
+                            {% for item in data_list_trainers %}
+                            <option value={{item.EmployeeID}} {% if item.EmployeeID == data_list[0].TrainerID %}selected{% endif %}>{{item.EmployeeName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Store" class="form-label">Store</label>
+                        <select id="Store" name="Store" class="form-select" disabled>
+                            <option>--Choose--</option>
+                            {% for item in data_list_stores %}
+                            <option value={{item.StoreID}} {% if item.StoreID == data_list[0].StoreID %}selected{% endif %}>{{item.StoreName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="AvailableSlots" class="form-label">AvailableSlots</label>
+                        <input type="text" class="form-control" id="AvailableSlots" name="AvailableSlots" value="{{data_list[0].MaximumSlots-data_list[0].OccupiedSlots}}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Price" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="Price" name="Price" value="{{data_list[0].Price}}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Quantity" class="form-label">Quantity</label>
+                        <input type="text" class="form-control" id="Quantity" name="Quantity" value=0>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Salesperson" class="form-label">Salesperson</label>
+                        <select id="Salesperson" name="Salesperson" class="form-select">
+                            <option>--Choose--</option>
+                            {% for item in data_list_salespersons %}
+                            <option value={{item.EmployeeID}}>{{item.EmployeeName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="TotalPrice" class="form-label">TotalPrice</label>
+                        <input type="text" class="form-control" id="TotalPrice" name="TotalPrice" value=0 disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Paymentmethods" class="form-label">Payment methods</label>
+                        <select id="Paymentmethods" name="Paymentmethods" class="form-select">
+                            <option>--Choose--</option>
+                            <option value=1>Card</option>
+                            <option value=2>Cash</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6" id="divCardNumber" hidden>
+                        <label for="CardNumber" class="form-label">Card Number</label>
+                        <input type="text" class="form-control" id="CardNumber" name="CardNumber" value="">
+                    </div>
+                    <div class="col-md-6" id="divCVV" hidden>
+                        <label for="CVV" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="CVV" name="CVV" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <button name="btnConfirm" type="button" class="btn btn-success">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>

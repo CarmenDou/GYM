@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EditClass</title>
+    <!--    <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css'/>-->
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.esm.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.bundle.js"></script>
+
+    <script src="/static/js/jquery.min.js"></script>
+
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+    </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <!---calender-style---->
+    <link rel="stylesheet" href="/static/css/jquery-ui.css"/>
+    <!---//calender-style---->
+    <script>
+        $(function () {
+            $("#StartDate, #EndDate").datepicker();
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+
+            $("[name='btnEdit']").click(function () {
+                $("#frm").attr("action", "/edit_class");
+                $("#frm").submit();
+            })
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <form id="frm" name="frm" class="row g-3" method="post" action="">
+                    <input type="hidden" id="CourseID" name="CourseID" value="{{data_list[0].CourseID}}">
+                    <div class="col-md-6">
+                        <label for="CourseName" class="form-label">CourseName</label>
+                        <input type="text" class="form-control" id="CourseName" name="CourseName" value="{{data_list[0].CourseName}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="CourseType" class="form-label">CourseType</label>
+                        <select id="CourseType" name="CourseType" class="form-select">
+                            <option>--Choose--</option>
+                            {% for item in data_list_coursetypes %}
+                            <option value={{item.CourseTypeID}} {% if item.CourseTypeID == data_list[0].CourseType %}selected{% endif %}>{{item.CourseTypeName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="CourseDescription" class="form-label">CourseDescription</label>
+                        <input type="text" class="form-control" id="CourseDescription" name="CourseDescription" value="{{data_list[0].CourseDescription}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="StartDate" class="form-label">StartDate</label>
+                        <input class="form-control date" id="StartDate" name="StartDate" type="text" value="{{data_list[0].StartDate|datetimeformat}}"
+                               onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="EndDate" class="form-label">EndDate</label>
+                        <input class="form-control date" id="EndDate" name="EndDate" type="text" value="{{data_list[0].EndDate|datetimeformat}}"
+                               onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Trainer" class="form-label">Trainer</label>
+                        <select id="Trainer" name="Trainer" class="form-select">
+                            <option>--Choose--</option>
+                            {% for item in data_list_trainers %}
+                            <option value={{item.EmployeeID}} {% if item.EmployeeID == data_list[0].TrainerID %}selected{% endif %}>{{item.EmployeeName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Store" class="form-label">Store</label>
+                        <select id="Store" name="Store" class="form-select">
+                            <option>--Choose--</option>
+                            {% for item in data_list_stores %}
+                            <option value={{item.StoreID}} {% if item.StoreID == data_list[0].StoreID %}selected{% endif %}>{{item.StoreName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="MaximumSlots" class="form-label">MaximumSlots</label>
+                        <input type="text" class="form-control" id="MaximumSlots" name="MaximumSlots" value="{{data_list[0].MaximumSlots}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Price" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="Price" name="Price" value="{{data_list[0].Price}}">
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <button name="btnEdit" type="button" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>

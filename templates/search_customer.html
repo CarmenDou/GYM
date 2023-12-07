@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SearchCustomer</title>
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.esm.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.bundle.js"></script>
+
+    <script src="/static/js/jquery.min.js"></script>
+
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+    </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <script>
+        $(function () {
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+
+            $("[name='btnEdit']").click(function () {
+                var id = $(this).val();
+                $("#OperationalCustomerID").val(id);
+                $("#frm").attr("action", "/customer/editform");
+                $("#frm").submit();
+            })
+
+            $("[name='btnDelete']").click(function () {
+                var id = $(this).val();
+                $("#OperationalCustomerID").val(id);
+                if (confirm("Are you sure to delete this customer?")) {
+                    $("#frm").attr("action", "/delete_customer");
+                    $("#frm").submit();
+                }
+            })
+
+            $("#btnSearch").click(function () {
+                var sSearchCustomerName = $("#SearchCustomerName").val()
+                var sCustomerType = $("#SearchCustomerType").val()
+                $("#frmSearch").submit();
+            })
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <form id="frmSearch" name="frmSearch" method="get" action="">
+                    <div class="input-group mb-3">
+                        <select id="SearchCustomerType" name="SearchCustomerType" class="form-select"
+                                aria-label="SearchCustomerType" style="width: 40%">
+                            <option value>--Choose Kind--</option>
+                            {% for item in data_list_coursetypes %}
+                            <option value="{{item.CourseTypeID}}" {% if [item.CourseTypeID]|join==SearchCourseType %}
+                                    selected {% endif %}>{{item.CourseTypeName}}
+                            </option>
+                            {% endfor %}
+                            <option value="home" {% if SearchCustomerType=="home" %} selected {% endif %}>home</option>
+                            <option value="business" {% if SearchCustomerType=="business" %} selected {% endif %}>business</option>
+                        </select>
+                        <input type="text" id="SearchCustomerName" name="SearchCustomerName" class="form-control"
+                               placeholder="CustomerName"
+                               aria-label="CustomerName" aria-describedby="button-addon2" value="{{SearchCustomerName}}"
+                               style="width: 40%">
+                        <button class="btn btn-outline-secondary" type="button" id="btnSearch">Search</button>
+                    </div>
+                </form>
+                <form id="frm" name="frm" method="post" action="">
+                    <input type="hidden" id="OperationalCustomerID" name="OperationalCustomerID" value="">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Street</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Email</th>
+                            <!--                            <th scope="col">Password</th>-->
+                            <!--                            <th scope="col">Zipcode</th>-->
+                            <th scope="col">CustomerKind</th>
+                            <!--                            <th scope="col">MarriageStatus</th>-->
+                            <!--                            <th scope="col">Gender</th>-->
+                            <!--                            <th scope="col">BirthDate</th>-->
+                            <!--                            <th scope="col">AnnualIncome</th>-->
+                            <!--                            <th scope="col">BusinessCategory</th>-->
+                            <!--                            <th scope="col">CompanyGrossAnnualIncome</th>-->
+                            {% if session.get('EmployeeTypeID') == 3 %}
+                            <th scope="col">Operation</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in data_list %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td>{{item.Name or ''}}</td>
+                            <td>{{item.Street or ''}}</td>
+                            <td>{{item.City or ''}}</td>
+                            <td>{{item.Email or ''}}</td>
+                            <!--                            <td>{{item.Password or ''}}</td>-->
+                            <!--                            <td>{{item.Zipcode or ''}}</td>-->
+                            <td>{{item.Kind or ''}}</td>
+                            <!--                            <td>{{item.MarriageStatus or ''}}</td>-->
+                            <!--                            <td>{{item.Gender or ''}}</td>-->
+                            <!--                            <td>{{item.BirthDate|datetimeformat}}-->
+                            <!--                            <td>{{item.AnnualIncome or ''}}</td>-->
+                            <!--                            <td>{{item.BusinessCategory or ''}}</td>-->
+                            <!--                            <td>{{item.CompanyGrossAnnualIncome or ''}}</td>-->
+                            {% if session.get('EmployeeTypeID') == 3 %}
+                            <td>
+                                <button name="btnEdit" type="button" class="btn btn-primary" value="{{item.CustomerID}}">
+                                    Edit
+                                </button>
+                                <button name="btnDelete" type="button" class="btn btn-danger" value="{{item.CustomerID}}">
+                                    Delete
+                                </button>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if session.get('EmployeeTypeID') == 3 %}
+                    <input name="btnAdd" type="button" class="btn btn-success" value="Add"
+                           onclick="location.href='/register'">
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>

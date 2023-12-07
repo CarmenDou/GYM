@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SignupClass</title>
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.esm.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.bundle.js"></script>
+
+    <script src="/static/js/jquery.min.js"></script>
+
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+    </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <!---calender-style---->
+    <link rel="stylesheet" href="/static/css/jquery-ui.css"/>
+    <!---//calender-style---->
+    <script>
+        $(function () {
+            // $("#StartDate, #EndDate").datepicker();
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+
+            $("[name='btnConfirm']").click(function () {
+                $("#frm").attr("action", "/edit_employee");
+                $("#frm").submit();
+            })
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <form id="frm" name="frm" class="row g-3" method="post" action="">
+                    <input type="hidden" id="EmployeeID" name="EmployeeID" value="{{data_list[0].EmployeeID}}">
+                    <div class="col-md-6">
+                        <label for="EmployeeName" class="form-label">EmployeeName</label>
+                        <input type="text" class="form-control" id="EmployeeName" name="EmployeeName" value="{{data_list[0].EmployeeName or ''}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="Address" name="Address" value="{{data_list[0].Address or ''}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="Email" name="Email" value="{{data_list[0].Email or ''}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="PhoneNumber" class="form-label">PhoneNumber</label>
+                        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="{{data_list[0].PhoneNumber or ''}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Password" class="form-label">Password</label>
+                        <input type="text" class="form-control" id="Password" name="Password" value="{{data_list[0].Password or ''}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="EmployeeType" class="form-label">EmployeeType</label>
+                        <select id="EmployeeType" name="EmployeeType" class="form-select">
+                            {% for item in data_list_employeetypes %}
+                            <option value={{item.EmployeeTypeID}} {% if item.EmployeeTypeID == data_list[0].EmployeeTypeID %}selected{% endif %}>{{item.EmployeeTypeName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="JobTitle" class="form-label">JobTitle</label>
+                        <input type="text" class="form-control" id="JobTitle" name="JobTitle" value="{{data_list[0].JobTitle or ''}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Store" class="form-label">Store</label>
+                        <select id="Store" name="Store" class="form-select">
+                            <option>--Choose--</option>
+                            {% for item in data_list_stores %}
+                            <option value={{item.StoreID}} {% if item.StoreID == data_list[0].StoreAssignedID %}selected{% endif %}>{{item.StoreName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Description" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="Description" name="Description" value="{{data_list[0].Descriptions or ''}}">
+                    </div>
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <button name="btnConfirm" type="button" class="btn btn-success">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>

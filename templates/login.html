@@ -1,0 +1,88 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Login</title>
+    <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#start_header_bottom").load("/start_header_bottom")
+			$("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<!-- start menu -->
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="login_top">
+        <div class="container">
+            <div class="col-md-6">
+                <div class="login-page">
+                    <h4 class="title">New Customers</h4>
+                    <p>To register a new account in our fitness center system, navigate to the registration page and provide your essential details, including name, email, and a secure password. Upon submission, our system will securely store your information, enabling access to personalized fitness plans, class schedules, and progress tracking features. Once registered, you'll enjoy a seamless fitness experience tailored to your preferences and goals.</p>
+                    <div class="button1">
+                        <a href="/register"><input type="submit" name="Submit" value="Create an Account"></a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="login-page">
+                    <div class="login-title">
+                        <h4 class="title">Registered Customers</h4>
+                        <div id="loginbox" class="loginbox">
+                            <form action="/login" method="post" name="login" id="login-form">
+                                <fieldset class="input">
+                                    <p id="login-form-username">
+                                        <label for="modlgn_username">Email</label>
+                                        <input id="modlgn_username" type="text" name="email" class="inputbox" size="18"
+                                               autocomplete="off">
+                                    </p>
+                                    <p id="login-form-password">
+                                        <label for="modlgn_passwd">Password</label>
+                                        <input id="modlgn_passwd" type="password" name="password" class="inputbox"
+                                               size="18" autocomplete="off">
+                                    </p>
+                                    <div>
+                                        {% for item in data_list %}
+                                        <span class="errorMessage"><div class="alert alert-danger" role="alert">{{item.errorMessage}}</div></span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="remember">
+                                        <p id="login-form-remember">
+                                            <label for="modlgn_remember"><a href="#">Forget Your Password ? </a></label>
+                                        </p>
+                                        <input type="submit" name="Submit" class="button" value="Login">
+                                        <div class="clear"></div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>

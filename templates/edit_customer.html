@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EditCustomer</title>
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.esm.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.bundle.js"></script>
+
+    <script src="/static/js/jquery.min.js"></script>
+
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+    </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <!---calender-style---->
+    <link rel="stylesheet" href="/static/css/jquery-ui.css"/>
+    <!---//calender-style---->
+    <script>
+        $(function () {
+            $("#StartDate, #EndDate").datepicker();
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+
+            $("[name='btnEdit']").click(function () {
+                $("#frm").attr("action", "/edit_customer");
+                $("#frm").submit();
+            })
+
+            changeKind()
+
+            $("[name='Kind']").change(function (e) {
+                changeKind()
+            })
+
+            function changeKind() {
+                if ($("#Kind").val() == "home") {
+                    document.getElementById('divGender').hidden = false;
+                    document.getElementById('divMarriageStatus').hidden = false;
+                    document.getElementById('divBirthDate').hidden = false;
+                    document.getElementById('divAnnualIncome').hidden = false;
+                    document.getElementById('divBusinessCategory').hidden = true;
+                    document.getElementById('divCompanyGrossAnnualIncome').hidden = true;
+                } else {
+                    document.getElementById('divGender').hidden = true;
+                    document.getElementById('divMarriageStatus').hidden = true;
+                    document.getElementById('divBirthDate').hidden = true;
+                    document.getElementById('divAnnualIncome').hidden = true;
+                    document.getElementById('divBusinessCategory').hidden = false;
+                    document.getElementById('divCompanyGrossAnnualIncome').hidden = false;
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <form id="frm" name="frm" class="row g-3" method="post" action="">
+                    <input type="hidden" id="CustomerID" name="CustomerID" value="{{data_list[0].CustomerID}}">
+                    <div class="col-md-6">
+                        <label for="Name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="Name" name="Name" value="{{data_list[0].Name}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Street" class="form-label">Street</label>
+                        <input type="text" class="form-control" id="Street" name="Street" value="{{data_list[0].Street}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="City" class="form-label">City</label>
+                        <input type="text" class="form-control" id="City" name="City" value="{{data_list[0].City}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Zipcode" class="form-label">Zipcode</label>
+                        <input type="text" class="form-control" id="Zipcode" name="Zipcode" value="{{data_list[0].Zipcode}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="Email" name="Email" value="{{data_list[0].Email}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Password" class="form-label">Password</label>
+                        <input type="text" class="form-control" id="Password" name="Password" value="{{data_list[0].Password}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="PhoneNumber" class="form-label">PhoneNumber</label>
+                        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="{{data_list[0].PhoneNumber}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Kind" class="form-label">Kind</label>
+                        <select id="Kind" name="Kind" class="form-select">
+                            {% for item in data_list_customertypes %}
+                            <option value={{item.CustomerTypeID}} {% if item.CustomerTypeID == data_list[0].Kind %}selected{% endif %}>{{item.CustomerTypeName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6" id="divGender" hidden>
+                        <label for="Gender" class="form-label">Gender</label>
+                        <select id="Gender" name="Gender" class="form-select">
+                            {% for item in data_list_genders %}
+                            <option value={{item.GenderID}} {% if item.GenderID == data_list[0].Gender %}selected{% endif %}>{{item.GenderName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6" id="divMarriageStatus" hidden>
+                        <label for="MarriageStatus" class="form-label">MarriageStatus</label>
+                        <select id="MarriageStatus" name="MarriageStatus" class="form-select">
+                            {% for item in data_list_marriagestatus %}
+                            <option value={{item.MarriageStatusID}} {% if item.MarriageStatusID == data_list[0].MarriageStatus %}selected{% endif %}>{{item.MarriageStatusName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6" id="divBirthDate" hidden>
+					    <label for="BirthDate" class="form-label">BirthDate</label>
+                        <input class="form-control date" id="BirthDate" name="BirthDate" type="text" value="{{data_list[0].BirthDate|datetimeformat}}"
+                               onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}">
+                    </div>
+                    <div class="col-md-6" id="divAnnualIncome" hidden>
+                        <label for="AnnualIncome" class="form-label">AnnualIncome</label>
+                        <input type="text" class="form-control" id="AnnualIncome" name="AnnualIncome" value="{{data_list[0].AnnualIncome or ''}}">
+                    </div>
+                    <div class="col-md-6" id="divBusinessCategory" hidden>
+                        <label for="BusinessCategory" class="form-label">BusinessCategory</label>
+                        <input type="text" class="form-control" id="BusinessCategory" name="BusinessCategory" value="{{data_list[0].BusinessCategory or ''}}">
+                    </div>
+                    <div class="col-md-6" id="divCompanyGrossAnnualIncome" hidden>
+                        <label for="CompanyGrossAnnualIncome" class="form-label">CompanyGrossAnnualIncome</label>
+                        <input type="text" class="form-control" id="CompanyGrossAnnualIncome" name="CompanyGrossAnnualIncome" value="{{data_list[0].CompanyGrossAnnualIncome or ''}}">
+                    </div>
+                    <div class="col-md-6">
+                        <button name="btnEdit" type="button" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>

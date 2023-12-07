@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>My information</title>
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <!---calender-style---->
+    <link rel="stylesheet" href="/static/css/jquery-ui.css"/>
+    <!---//calender-style---->
+    <script>
+        $(function () {
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+
+            $("[name='btnEdit']").click(function () {
+                $("#frmEdit").attr("action", "/customer/editform");
+                $("#frmEdit").submit();
+            })
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<!-- start menu -->
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <form id="frmEdit" name="frmEdit" method="POST" class="row g-3" action="">
+                    <input type="hidden" id="OperationalCustomerID" name="OperationalCustomerID" value="{{data_list[0].CustomerID}}">
+<!--                    <div class="col-md-6">-->
+<!--                        <label for="CustomerID" class="form-label">CustomerID</label>-->
+<!--                        <input type="text" class="form-control" id="CustomerID" name="CustomerID"-->
+<!--                               value="{{data_list[0].CustomerID}}" disabled>-->
+<!--                    </div>-->
+                    <div class="col-md-6">
+                        <label for="Name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="Name" name="Name" value="{{data_list[0].Name or ''}}"
+                               disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Street" class="form-label">Street</label>
+                        <input type="text" class="form-control" id="Street" name="Street"
+                               value="{{data_list[0].Street or ''}}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="City" class="form-label">City</label>
+                        <input type="text" class="form-control" id="City" name="City" value="{{data_list[0].City or ''}}"
+                               disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Zipcode" class="form-label">Zipcode</label>
+                        <input type="text" class="form-control" id="Zipcode" name="Zipcode"
+                               value="{{data_list[0].Zipcode or ''}}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="Email" name="Email" value="{{data_list[0].Email or ''}}"
+                               disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Password" class="form-label">Password</label>
+                        <input type="text" class="form-control" id="Password" name="Password"
+                               value="{{data_list[0].Password or ''}}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="PhoneNumber" class="form-label">PhoneNumber</label>
+                        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="{{data_list[0].PhoneNumber or ''}}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Kind" class="form-label">Kind</label>
+                        <input type="text" class="form-control" id="Kind" name="Kind" value="{{data_list[0].Kind or ''}}"
+                               disabled>
+                    </div>
+                    {% if data_list[0].Kind == "home" %}
+                    <div class="col-md-6">
+                        <label for="MarriageStatus" class="form-label">MarriageStatus</label>
+                        <input type="text" class="form-control" id="MarriageStatus" name="MarriageStatus" value="{{data_list[0].MarriageStatus or ''}}"
+                               disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Gender" class="form-label">Gender</label>
+                        <input type="text" class="form-control" id="Gender" name="Gender" value="{{data_list[0].Gender or ''}}"
+                               disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="BirthDate" class="form-label">BirthDate</label>
+                        <input type="text" class="form-control" id="BirthDate" name="BirthDate" value="{{data_list[0].BirthDate or ''}}"
+                               disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="AnnualIncome" class="form-label">AnnualIncome</label>
+                        <input type="text" class="form-control" id="AnnualIncome" name="AnnualIncome" value="{{data_list[0].AnnualIncome or ''}}"
+                               disabled>
+                    </div>
+                    {% endif %}
+                    {% if data_list[0].Kind == "business" %}
+                    <div class="col-md-6">
+                        <label for="BusinessCategory" class="form-label">BusinessCategory</label>
+                        <input type="text" class="form-control" id="BusinessCategory" name="BusinessCategory" value="{{data_list[0].BusinessCategory or ''}}"
+                               disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="CompanyGrossAnnualIncome" class="form-label">CompanyGrossAnnualIncome</label>
+                        <input type="text" class="form-control" id="CompanyGrossAnnualIncome" name="CompanyGrossAnnualIncome" value="{{data_list[0].CompanyGrossAnnualIncome or ''}}"
+                               disabled>
+                    </div>
+                    {% endif %}
+                    <div class="col-md-6">
+                        <button name="btnEdit" type="button" class="btn btn-success">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>

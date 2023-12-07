@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BusinessPurchase_Sales</title>
+    <link href="/static/plugin/bootstrap-5.0.2/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.esm.js"></script>
+    <script href="/static/plugin/bootstrap-5.0.2/js/bootstrap.bundle.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+    </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.contentcarousel.js"></script>
+    <!---calender-style---->
+    <link rel="stylesheet" href="/static/css/jquery-ui.css"/>
+    <!---//calender-style---->
+    <script>
+        $(function () {
+            $("#start_header_bottom").load("/start_header_bottom")
+            $("#start_menu").load("/start_menu")
+            $("#footer_bottom").load("/footer_bottom")
+
+            $("#btnSearch").click(function () {
+                $("#frmSearch").attr("action", "/dashboard/business_purchase_sales")
+                $("#frmSearch").submit();
+            })
+        });
+    </script>
+</head>
+<body>
+<!-- start header_bottom -->
+<div id="start_header_bottom"></div>
+<div id="start_menu"></div>
+<!-- end menu -->
+<div class="main">
+    <div class="register-grids">
+        <div class="container">
+            <div class="register-top-grid">
+                <form id="frmSearch" name="frmSearch" method="get" action="">
+                    <div class="input-group mb-3">
+                        <input type="text" id="StartDate" name="StartDate" class="form-control"
+                               placeholder="StartDate"
+                               aria-label="StartDate" aria-describedby="button-addon2" value="{{StartDate}}" style="width: 40%">
+                        &nbsp;&nbsp;-&nbsp;&nbsp;
+                        <input type="text" id="EndDate" name="EndDate" class="form-control"
+                               placeholder="EndDate"
+                               aria-label="EndDate" aria-describedby="button-addon2" value="{{EndDate}}" style="width: 40%">
+
+                        <button class="btn btn-outline-secondary" type="button" id="btnSearch">Search</button>
+                    </div>
+                </form>
+                <form id="frm" name="frm" method="post" action="">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">CompanyName</th>
+                            <th scope="col">TotalPurchaseQuantity (sort by desc)</th>
+                            <th scope="col">TotalPurchaseAmount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in data_list %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td>{{item.Name}}</td>
+                            <td>{{item.TotalQuantity or ''}}</td>
+                            <td>{{item.TotalAmount or ''}}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <th scope="row"></th>
+                            <td>All Company Sum</td>
+                            <td>{{sumQuantity or ''}}</td>
+                            <td>{{sumAmount or ''}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer_bottom -->
+<div id="footer_bottom"></div>
+</body>
+</html>
